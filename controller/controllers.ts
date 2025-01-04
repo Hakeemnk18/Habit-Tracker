@@ -119,10 +119,41 @@ const updateHabit = async(req:Request,res:Response)=>{
     }
 }
 
+const deleteHabit = async(req:Request,res:Response)=>{
+    try {
+        console.log("inside delete habit")
+        console.log(req.params)
+        const {id,type} = req.params
+        if(type === 'good'){
+            const deleteGoodHabit = await GoodHabit.findByIdAndDelete(id)
+            if(!deleteGoodHabit){
+                res.status(400).json({message:"habit not found"})
+                return
+            }
+        }
+        if(type === 'bad'){
+            const deleteBadHabit = await BadHabit.findByIdAndDelete(id)
+            if(!deleteBadHabit){
+                res.status(400).json({message:"habit not found"})
+                return
+            }
+        }
+         res.status(200).json({ message: "Habit deleted successfully" });
+    } catch (error) {
+        if(error instanceof Error){
+            console.log("error in edit habit put "+error.message)
+        }else{
+            console.log("unknown error in edit habit put")
+        }
+         res.status(500).json({message:"error in delete habit"})
+    }
+}
+
 export {
     landingPage,
     addHabit,
     addHabitValue,
     editHabit,
-    updateHabit
+    updateHabit,
+    deleteHabit
 }
