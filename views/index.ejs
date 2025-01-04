@@ -118,7 +118,7 @@
                         <% if(goodHabit !== undefined && goodHabit.length > 0){ %>
                             <% goodHabit.forEach((item)=>{ %>
                                 <tr>
-                                    <td>habit 1</td>
+                                    <td><%= item.name %></td>
                                     <td>1</td>
                                     <td>2</td>
                                     <td>3</td>
@@ -158,7 +158,7 @@
                         <% if(badHabit !== undefined && badHabit.length > 0){ %>
                             <% badHabit.forEach((item)=>{ %>
                                 <tr>
-                                    <td>habit 1</td>
+                                    <td><%= item.name %></td>
                                     <td>1</td>
                                     <td>2</td>
                                     <td>3</td>
@@ -179,13 +179,25 @@
     </div>
 
     <script>
-        // Chart configuration
-        const chartConfig = {
+        const badHabitData = <%- JSON.stringify(badHabit) %>;
+
+        
+        const badHabitNames = badHabitData.map(habit => habit.name);
+        const badHabitCounts = badHabitData.map(habit => habit.count);
+        console.log(badHabitCounts)
+        console.log(badHabitNames)
+
+        const goodHabitData = <%- JSON.stringify(goodHabit) %>;
+        const goodHabitNames = goodHabitData.map(habit => habit.name)
+        const goodHabitCounts = goodHabitData.map(habit => habit.count)
+        
+
+        const badChartConfig = {
         type: 'bar',
         data: {
-            labels: ['Habit 1', 'Habit 2', 'Habit 3', 'Habit 4', 'Habit 5'],
+            labels: badHabitNames,
             datasets: [{
-                data: [10, 30, 20, 20, 50], // Example data
+                data: badHabitCounts, // Example data
                 backgroundColor: [
                     '#87CEEB',
                     '#40E0D0',
@@ -237,8 +249,64 @@
     };
 
 
-    new Chart(document.getElementById('habitChart1').getContext('2d'), chartConfig);
-    new Chart(document.getElementById('habitChart2').getContext('2d'), chartConfig);
+    new Chart(document.getElementById('habitChart1').getContext('2d'), badChartConfig);
+
+    const goodChartConfig = {
+        type: 'bar',
+        data: {
+            labels: goodHabitNames,
+            datasets: [{
+                data: goodHabitCounts, // Example data
+                backgroundColor: [
+                    '#87CEEB',
+                    '#40E0D0',
+                    '#4169E1',
+                    '#4169E1',
+                    '#9370DB'
+                ],
+                borderRadius: 5,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+                datalabels: {
+                    anchor: 'end', // Place on top
+                    align: 'end',  // Align top of bar
+                    color: '#000',
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    },
+                    padding: { top: 5 },
+                    clip: false // Ensures labels stay visible outside the chart
+                }
+            },
+            layout: {
+                padding: {
+                    top: 30 // Increase padding to make space for top labels
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#000' }
+                },
+                y: {
+                    // beginAtZero: true,
+                    // ticks: { color: '#000' },
+                    display:false
+
+                }
+            }
+        },
+        plugins: [ChartDataLabels] // Ensure this plugin is active
+    };
+    new Chart(document.getElementById('habitChart2').getContext('2d'), goodChartConfig);
 
     </script>
 

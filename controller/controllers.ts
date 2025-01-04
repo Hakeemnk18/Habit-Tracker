@@ -8,19 +8,19 @@ const landingPage=async (req:Request,res:Response)=>{
         console.log("good habit ",goodHabit)
         console.log("bad habit ",badHabit)
 
-        goodHabit.forEach(habit => {
-            const startDate = new Date(habit.startDate);
-            const today = new Date();
-            const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
-            habit.count = count; // Update count dynamically
-        });
+        // goodHabit.forEach(habit => {
+        //     const startDate = new Date(habit.startDate);
+        //     const today = new Date();
+        //     const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
+        //     habit.count = count; // Update count dynamically
+        // });
         
-        badHabit.forEach(habit => {
-            const startDate = new Date(habit.startDate);
-            const today = new Date();
-            const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
-            habit.count = count; 
-        });
+        // badHabit.forEach(habit => {
+        //     const startDate = new Date(habit.startDate);
+        //     const today = new Date();
+        //     const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
+        //     habit.count = count; 
+        // });
         res.render("index",{goodHabit,badHabit})
 
     } catch (error) {
