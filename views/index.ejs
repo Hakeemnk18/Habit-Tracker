@@ -115,56 +115,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>habit 1</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 2</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 3</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 4</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 5</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
+                        <% if(goodHabit !== undefined && goodHabit.length > 0){ %>
+                            <% goodHabit.forEach((item)=>{ %>
+                                <tr>
+                                    <td>habit 1</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-pen"></i></td>
+                                </tr>
+                            <% }) %>
+
+                        <% } %>
+                        
                     </tbody>
                 </table>
             </div>
@@ -189,61 +155,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>habit 1</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 2</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 3</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 4</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
-                        <tr>
-                            <td>habit 5</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td><i class="fas fa-trash"></i></td>
-                            <td><i class="fas fa-pen"></i></td>
-                        </tr>
+                        <% if(badHabit !== undefined && badHabit.length > 0){ %>
+                            <% badHabit.forEach((item)=>{ %>
+                                <tr>
+                                    <td>habit 1</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-pen"></i></td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                        
+                        
                     </tbody>
                 </table>
             </div>
         </div>
-        <button class="add-habit-btn">Add Habit</button>
+        <button class="add-habit-btn"><a href="/addHabit" style="text-decoration: none;color: inherit;">Add Habit</a></button>
     </div>
 
     <script>
