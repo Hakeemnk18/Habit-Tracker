@@ -125,7 +125,8 @@
                                     <td>4</td>
                                     <td>5</td>
                                     <td><i class="fas fa-trash"></i></td>
-                                    <td><i class="fas fa-pen"></i></td>
+                                    
+                                    <td><a href="/editHabit?id=<%= item._id %>&type=good" style="text-decoration: none;color: inherit;"><i class="fas fa-pen"></i></a></i></td>
                                 </tr>
                             <% }) %>
 
@@ -165,7 +166,7 @@
                                     <td>4</td>
                                     <td>5</td>
                                     <td><i class="fas fa-trash"></i></td>
-                                    <td><i class="fas fa-pen"></i></td>
+                                    <td></td>
                                 </tr>
                             <% }) %>
                         <% } %>
@@ -307,6 +308,7 @@
         plugins: [ChartDataLabels] // Ensure this plugin is active
     };
     new Chart(document.getElementById('habitChart2').getContext('2d'), goodChartConfig);
+    //<a href="/editHabit" style="text-decoration: none;color: inherit;"><i class="fas fa-pen"></i></a>
 
     </script>
 

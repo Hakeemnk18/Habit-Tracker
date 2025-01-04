@@ -78,8 +78,51 @@ const addHabitValue = async(req:Request,res:Response)=>{
     }
 }
 
+//edit habit
+
+const editHabit = async(req:Request,res:Response)=>{
+    try {
+        console.log(req.query)
+        const {id,type} = req.query
+        let habit
+        if(type === 'good'){
+            console.log("inside if")
+            habit = await GoodHabit.findById(id)
+            console.log(habit)
+        }
+        
+        res.render("editHabit",{habit})
+    } catch (error) {
+        if(error instanceof Error){
+            console.log("error in edit habit get "+error.message)
+        }else{
+            console.log("unknown error in edit habit get")
+        }
+    }
+}
+
+const updateHabit = async(req:Request,res:Response)=>{
+    try {
+        console.log("inside put method")
+        console.log(req.body)
+        const {habitName,description,habitId,habitType} = req.body
+        if(habitType === 'good'){
+            await GoodHabit.findByIdAndUpdate(habitId,{$set:{name:habitName,description:description}})
+        }
+        res.redirect('/')
+    } catch (error) {
+        if(error instanceof Error){
+            console.log("error in edit habit put "+error.message)
+        }else{
+            console.log("unknown error in edit habit put")
+        }
+    }
+}
+
 export {
     landingPage,
     addHabit,
-    addHabitValue
+    addHabitValue,
+    editHabit,
+    updateHabit
 }

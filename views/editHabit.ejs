@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Habit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #2b2b54;
+            --nav-bg: #1a1a40;
+            --chart-turquoise: #40E0D0;
+            --chart-light-blue: #87CEEB;
+            --chart-blue: #4169E1;
+            --chart-purple: #9370DB;
+            --text-yellow: #FFD700;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--nav-bg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 0 1rem;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            color: var(--text-yellow);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 0.75rem;
+        }
+
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 5px;
+            width: 20%;
+        }
+
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <span class="navbar-brand">Habit Tracker</span>
+        </div>
+    </nav>
+
+    <div class="main-content container">
+        <!-- Form for adding a habit -->
+        <div class="form-container">
+            <h2 class="form-title">Edit Habit</h2>
+            <form action="/editHabit?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label for="habitName">Habit Name</label>
+                    <input type="text" class="form-control" id="habitName" name="habitName" required value="<%= habit?.name %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required ><%= habit?.description %></textarea>
+                </div>
+                <div>
+                    <input type="hidden" name="habitId" value="<%= habit?._id %>">
+                    <input type="hidden" name="habitType" value="<%= habit?.type %>">
+                </div>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn-submit">Edit Habit</button>
+                </div>
+                
+                
+            </form>
+        </div>
+    </div>
+
+    <!-- Optional Bootstrap JS and Popper.js for form validation -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
