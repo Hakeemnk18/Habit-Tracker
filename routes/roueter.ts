@@ -1,12 +1,10 @@
 import express, { Application, Request, Response } from 'express';
+import *as controllers from "../controller/controllers"
 
 
 
 const router = express.Router()
 
-router.get('/',(request:Request,response:Response)=>{
-    console.log("inside router")
-    response.render("index")
-})
+router.get('/',controllers.landingPage)
 
 export default router
