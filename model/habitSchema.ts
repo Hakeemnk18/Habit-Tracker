@@ -8,7 +8,8 @@ interface iHabit extends Document{
     startDate:Date;
     endDate?:Date;
     description:string;
-    status:"active" | "stoped"
+    status:"active" | "stoped";
+    days:number[]
 }
 
 interface GoodHabit extends iHabit{
@@ -26,7 +27,10 @@ const HabitSchema: Schema = new Schema({
         endDate:{type:Date},
         count:{type:Number,required:true},
         status:{type:String,enum:["active","stoped"],default:"active"},
-        type:{type:String,required:true,enum:["good","bad"]}
+        type:{type:String,required:true,enum:["good","bad"]},
+        days:{
+            type:[String]
+        }
 
     },
     {timestamps:true} 
