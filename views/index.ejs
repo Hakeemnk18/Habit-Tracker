@@ -112,6 +112,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,14 +121,21 @@
                             <% goodHabit.forEach((item)=>{ %>
                                 <tr>
                                     <td><%= item.name %></td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
-                                    <td><i class="fas fa-trash deleteIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"></i></td>
+                                    <td><%= item.days[0] %></td>
+                                    <td><%= item.days[1] %></td>
+                                    <td><%= item.days[2] %></td>
+                                    <td><%= item.days[3] %></td>
+                                    <td><%= item.days[4] %></td>
                                     
-                                    <td><a href="/editHabit?id=<%= item._id %>&type=good" style="text-decoration: none;color: inherit;"><i class="fas fa-pen"></i></a></i></td>
+                                    <td><i class="fas fa-trash deleteIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"></i></td>
+                                    <td><a href="/editHabit?id=<%= item._id %>&type=good" style="text-decoration: none;color: inherit;"><i class="fas fa-pen" title="Edit Habit"></i></a></i></td>
+                                    <% if(item.status === 'active'){ %>
+                                        <td><i class="fas fa-ban disableIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"=""></i></td>
+                                    <% }else{ %>
+                                        <td><i class="fas fa-undo" ></i></td>
+                                    <% } %>
+                                    
+                                    
                                 </tr>
                             <% }) %>
 
@@ -178,10 +187,44 @@
         </div>
         <button class="add-habit-btn"><a href="/addHabit" style="text-decoration: none;color: inherit;">Add Habit</a></button>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded",()=>{
-            console.log("inside dom loaded")
+            const disableIcon = document.querySelectorAll('.disableIcon')
+            console.log("inside disabled fetch")
+            disableIcon.forEach(button =>{
+                button.addEventListener("click",async(event)=>{
+                    const id = button.getAttribute("data-id")
+                    const type = button.getAttribute("data-type")
+
+                    try {
+                        const response = await fetch("/disable",{
+                            method:"PUT",
+                            headers:{
+                                'Content-Type': 'application/json',
+                            },
+                            body:JSON.stringify({
+                                id:id,
+                                type:type
+                            })
+                        })
+
+                        if(response.ok){
+                            alert("habit is disabled")
+                            window.location.reload()
+                        }else{
+                            alert("habit failed to disabled")
+                        }
+                    } catch (error) {
+                        console.log("error in fetch delete habit ",error)
+                        alert('An error occurred while deleting the habit.');
+                    }
+                })
+            })
+        })
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            
             const deleteIcon = document.querySelectorAll(".deleteIcon")
 
             deleteIcon.forEach(icon => {
@@ -288,7 +331,7 @@
     };
 
 
-    new Chart(document.getElementById('habitChart1').getContext('2d'), badChartConfig);
+    
 
     const goodChartConfig = {
         type: 'bar',
@@ -345,7 +388,8 @@
         },
         plugins: [ChartDataLabels] // Ensure this plugin is active
     };
-    new Chart(document.getElementById('habitChart2').getContext('2d'), goodChartConfig);
+    new Chart(document.getElementById('habitChart1').getContext('2d'),goodChartConfig);
+    new Chart(document.getElementById('habitChart2').getContext('2d'),badChartConfig );
     //<a href="/editHabit" style="text-decoration: none;color: inherit;"><i class="fas fa-pen"></i></a>
 
     </script>

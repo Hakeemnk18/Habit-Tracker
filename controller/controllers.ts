@@ -5,8 +5,9 @@ const landingPage=async (req:Request,res:Response)=>{
     try {
         const goodHabit = await GoodHabit.find()
         const badHabit = await BadHabit.find()
-        console.log("good habit ",goodHabit)
-        console.log("bad habit ",badHabit)
+        console.log(goodHabit)
+        // console.log("good habit ",goodHabit)
+        // console.log("bad habit ",badHabit)
 
         // goodHabit.forEach(habit => {
         //     const startDate = new Date(habit.startDate);
@@ -149,11 +150,40 @@ const deleteHabit = async(req:Request,res:Response)=>{
     }
 }
 
+const disableHabit=async(req:Request,res:Response)=>{
+    try {
+        console.log("inside disabled habit")
+        console.log(req.body)
+        const {id,type} = req.body
+        
+        if(type === 'good'){
+            const habit = await GoodHabit.findById(id)
+            const startDate = new Date(habit!.startDate);
+            const today = new Date();
+            const days =  Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+            
+            await GoodHabit.findByIdAndUpdate(id,{$set:{status:"stopped"},$push:{days:{ $each: [days], $slice: -5 }}})
+        }
+        res.status(200).json({ message: "habit disabled" });
+        return
+    } catch (error) {
+        if(error instanceof Error){
+            console.log("error in disabled habit put "+error.message)
+        }else{
+            console.log("unknown error in disabled put")
+        }
+         res.status(500).json({message:"error in disabled habit"})
+         return
+    }
+}
+
+
 export {
     landingPage,
     addHabit,
     addHabitValue,
     editHabit,
     updateHabit,
-    deleteHabit
+    deleteHabit,
+    disableHabit
 }
