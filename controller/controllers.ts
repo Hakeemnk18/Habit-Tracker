@@ -87,9 +87,12 @@ const editHabit = async(req:Request,res:Response)=>{
         const {id,type} = req.query
         let habit
         if(type === 'good'){
-            console.log("inside if")
+            
             habit = await GoodHabit.findById(id)
             console.log(habit)
+        }else if(type === 'bad'){
+            habit = await BadHabit.findById(id)
+
         }
         
         res.render("editHabit",{habit})
@@ -109,6 +112,8 @@ const updateHabit = async(req:Request,res:Response)=>{
         const {habitName,description,habitId,habitType} = req.body
         if(habitType === 'good'){
             await GoodHabit.findByIdAndUpdate(habitId,{$set:{name:habitName,description:description}})
+        }else if(habitType === 'bad'){
+            await BadHabit.findByIdAndUpdate(habitId,{$set:{name:habitName,description:description}})
         }
         res.redirect('/')
     } catch (error) {
@@ -163,7 +168,15 @@ const disableHabit=async(req:Request,res:Response)=>{
             const days =  Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
             
             await GoodHabit.findByIdAndUpdate(id,{$set:{status:"stopped"},$push:{days:{ $each: [days], $slice: -5 }}})
+        }else if(type === 'bad'){
+            const habit = await BadHabit.findById(id)
+            const startDate = new Date(habit!.startDate)
+            const today = new Date()
+            const days = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+            console.log(days)
+            await BadHabit.findByIdAndUpdate(id,{$set:{status:"stopped"},$push:{days:{$each:[days],$slice:-5}}})
         }
+        
         res.status(200).json({ message: "habit disabled" });
         return
     } catch (error) {
