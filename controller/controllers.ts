@@ -3,9 +3,11 @@ import {GoodHabit,BadHabit} from "../model/habitSchema"
 
 const landingPage=async (req:Request,res:Response)=>{
     try {
-        const goodHabit = await GoodHabit.find()
-        const badHabit = await BadHabit.find()
-        console.log(goodHabit)
+        const goodHabit = await GoodHabit.find({status:"active"})
+        const badHabit = await BadHabit.find({status:"active"})
+        const badHabitList = await BadHabit.find()
+        const goodHabitList = await GoodHabit.find()
+        // console.log(goodHabit)
         // console.log("good habit ",goodHabit)
         // console.log("bad habit ",badHabit)
 
@@ -22,7 +24,7 @@ const landingPage=async (req:Request,res:Response)=>{
         //     const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
         //     habit.count = count; 
         // });
-        res.render("index",{goodHabit,badHabit})
+        res.render("index",{goodHabit,badHabit,badHabitList,goodHabitList})
 
     } catch (error) {
         if(error instanceof Error){
@@ -190,6 +192,29 @@ const disableHabit=async(req:Request,res:Response)=>{
     }
 }
 
+const activeHabit=async(req:Request,res:Response)=>{
+    try {
+        console.log("inside fetch active habit")
+        console.log(req.body)
+        const {type,id} = req.body
+
+        if(type === 'good'){
+            await GoodHabit.findByIdAndUpdate(id,{$set:{status:"active",startDate:Date.now()}})
+        }else if(type === 'bad'){
+            await BadHabit.findByIdAndUpdate(id,{$set:{status:"active",startDate:Date.now()}})
+        }
+        res.status(200).json({message:"habit actived"})
+        return
+    } catch (error) {
+        if(error instanceof Error){
+            console.log("error in active habit put "+error.message)
+        }else{
+            console.log("unknown error in active put")
+        }
+         res.status(500).json({message:"error in active habit"})
+         return
+    }
+}
 
 export {
     landingPage,
@@ -198,5 +223,6 @@ export {
     editHabit,
     updateHabit,
     deleteHabit,
-    disableHabit
+    disableHabit,
+    activeHabit
 }
