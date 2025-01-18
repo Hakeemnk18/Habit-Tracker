@@ -7,23 +7,20 @@ const landingPage=async (req:Request,res:Response)=>{
         const badHabit = await BadHabit.find({status:"active"})
         const badHabitList = await BadHabit.find()
         const goodHabitList = await GoodHabit.find()
-        // console.log(goodHabit)
-        // console.log("good habit ",goodHabit)
-        // console.log("bad habit ",badHabit)
-
-        // goodHabit.forEach(habit => {
-        //     const startDate = new Date(habit.startDate);
-        //     const today = new Date();
-        //     const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
-        //     habit.count = count; // Update count dynamically
-        // });
         
-        // badHabit.forEach(habit => {
-        //     const startDate = new Date(habit.startDate);
-        //     const today = new Date();
-        //     const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
-        //     habit.count = count; 
-        // });
+        goodHabit.forEach(habit => {
+            const startDate = new Date(habit.startDate);
+            const today = new Date();
+            const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
+            habit.count = count; // Update count dynamically
+        });
+        
+        badHabit.forEach(habit => {
+            const startDate = new Date(habit.startDate);
+            const today = new Date();
+            const count = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 3600 * 24)); // Calculate days passed
+            habit.count = count; 
+        });
         res.render("index",{goodHabit,badHabit,badHabitList,goodHabitList})
 
     } catch (error) {

@@ -170,11 +170,11 @@
                             <% badHabitList.forEach((item)=>{ %>
                                 <tr>
                                     <td><%= item.name %></td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
+                                    <td><%= item.days[0] %></td>
+                                    <td><%= item.days[1] %></td>
+                                    <td><%= item.days[2] %></td>
+                                    <td><%= item.days[3] %></td>
+                                    <td><%= item.days[4] %></td>
                                     <td><i class="fas fa-trash deleteIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"></i></td>
                                     <td><a href="/editHabit?id=<%= item._id %>&type=<%= item.type %>" style="text-decoration: none;color: inherit;"><i class="fas fa-pen" title="Edit Habit"></i></a></i></td>
                                     <% if(item.status === 'active'){ %>
