@@ -117,8 +117,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if(goodHabit !== undefined && goodHabit.length > 0){ %>
-                            <% goodHabit.forEach((item)=>{ %>
+                        <% if(goodHabitList !== undefined && goodHabitList.length > 0){ %>
+                            <% goodHabitList.forEach((item)=>{ %>
                                 <tr>
                                     <td><%= item.name %></td>
                                     <td><%= item.days[0] %></td>
@@ -132,7 +132,7 @@
                                     <% if(item.status === 'active'){ %>
                                         <td><i class="fas fa-ban disableIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"=""></i></td>
                                     <% }else{ %>
-                                        <td><i class="fas fa-undo" ></i></td>
+                                        <td><i class="fas fa-undo activateIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"></i></td>
                                     <% } %>
                                     
                                     
@@ -166,8 +166,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if(badHabit !== undefined && badHabit.length > 0){ %>
-                            <% badHabit.forEach((item)=>{ %>
+                        <% if(badHabitList !== undefined && badHabitList.length > 0){ %>
+                            <% badHabitList.forEach((item)=>{ %>
                                 <tr>
                                     <td><%= item.name %></td>
                                     <td>1</td>
@@ -180,7 +180,7 @@
                                     <% if(item.status === 'active'){ %>
                                         <td><i class="fas fa-ban disableIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"=""></i></td>
                                     <% }else{ %>
-                                        <td><i class="fas fa-undo" ></i></td>
+                                        <td><i class="fas fa-undo activateIcon" data-id="<%= item._id %>" data-type="<%= item.type %>"></i></td>
                                     <% } %>
                                 </tr>
                             <% }) %>
@@ -195,8 +195,48 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded",()=>{
+            const activeIcon = document.querySelectorAll('.activateIcon')
+            console.log("inside active event")
+
+            activeIcon.forEach(icon =>{
+                icon.addEventListener("click",async()=>{
+                    const id = icon.getAttribute("data-id")
+                    const type = icon.getAttribute("data-type")
+                    console.log("type "+type)
+                    console.log("id "+id)
+                    try {
+                        const response = await fetch("/active",{
+                            method:"PUT",
+                            headers:{
+                                'Content-Type': 'application/json',
+                            },
+                            body:JSON.stringify({
+                                id:id,
+                                type:type
+                            })
+                        })
+
+                        if(response.ok){
+                            alert("habit is active")
+                            window.location.reload()
+                        }else{
+                            alert("habit failed to active")
+                        }
+                    } catch (error) {
+                        console.log("error in active fetch",error)
+                        alert('An error occurred while active the habit.');
+                    }
+                })
+                
+
+                
+            })
+        })
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
             const disableIcon = document.querySelectorAll('.disableIcon')
-            console.log("inside disabled fetch")
+            
             disableIcon.forEach(button =>{
                 button.addEventListener("click",async(event)=>{
                     const id = button.getAttribute("data-id")
@@ -222,7 +262,7 @@
                         }
                     } catch (error) {
                         console.log("error in fetch delete habit ",error)
-                        alert('An error occurred while deleting the habit.');
+                        alert('An error occurred while desabled the habit.');
                     }
                 })
             })
